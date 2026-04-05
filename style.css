@@ -1,0 +1,157 @@
+/* style.css */
+
+/* Сброс базовых стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* BODY */
+body {
+    background: #1a1a1a;
+    color: #f5f5f5;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    background: #0d0d0d;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 2px solid #333;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #f0c530;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+/* MAIN CONTENT */
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Leaderboard Section */
+.leaderboard h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f0c530;
+}
+
+/* TABLE CONTAINER */
+#table-container {
+    background: #0d0d0d;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 2px solid #333;
+    margin-top: 40px;
+    color: #888;
+}
+
+/* Таблица топ-10 игроков */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.leaderboard-table th {
+    background-color: #222;
+    color: #f0c530;
+}
+
+.leaderboard-table tr:nth-child(odd) {
+    background-color: #121212;
+}
+
+.leaderboard-table tr:nth-child(even) {
+    background-color: #1b1b1b;
+}
+
+/* Hover эффект */
+.leaderboard-table tr:hover {
+    background-color: #333;
+    transition: 0.2s;
+}
+
+/* Подсветка топ-3 */
+.leaderboard-table tr:nth-child(1) td {
+    color: #ffd700; /* золотой */
+    font-weight: bold;
+}
+
+.leaderboard-table tr:nth-child(2) td {
+    color: #c0c0c0; /* серебро */
+}
+
+.leaderboard-table tr:nth-child(3) td {
+    color: #cd7f32; /* бронза */
+}
+
+/* Плавное появление таблицы */
+#table-container {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Анимация появления строк таблицы поочередно */
+.leaderboard-table tbody tr {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rowFadeIn 0.5s forwards;
+}
+
+.leaderboard-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.leaderboard-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.leaderboard-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.leaderboard-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.leaderboard-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+.leaderboard-table tbody tr:nth-child(6) { animation-delay: 0.6s; }
+.leaderboard-table tbody tr:nth-child(7) { animation-delay: 0.7s; }
+.leaderboard-table tbody tr:nth-child(8) { animation-delay: 0.8s; }
+.leaderboard-table tbody tr:nth-child(9) { animation-delay: 0.9s; }
+.leaderboard-table tbody tr:nth-child(10) { animation-delay: 1s; }
+
+@keyframes rowFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Лёгкий hover эффект с масштабированием */
+.leaderboard-table tbody tr:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s, background-color 0.2s;
+}

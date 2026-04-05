@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MCTiers Style Leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>MCTiers Leaderboard</h1>
+        <p>Top PvP Players</p>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <section class="leaderboard">
+
+            <h2>Top 10 Players</h2>
+
+            <!-- Сюда будет динамически вставляться таблица -->
+            <div id="table-container"></div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Made by kinghterr</p>
+    </footer>
+<script>
+// Массив с данными топ-10 игроков
+const topPlayers = [
+    {rank: 1, name: "kinghterr", kills: 250, deaths: 30, kd: 8.33, wins: 40, losses: 5, score: 900},
+    {rank: 2, name: "_cBEQ_00_00", kills: 220, deaths: 25, kd: 8.80, wins: 35, losses: 7, score: 850},
+    {rank: 3, name: "max11pro", kills: 200, deaths: 40, kd: 5.00, wins: 30, losses: 10, score: 800},
+    {rank: 4, name: "sasmia3m", kills: 180, deaths: 35, kd: 5.14, wins: 28, losses: 12, score: 750},
+    {rank: 5, name: "PvP_S0ska", kills: 160, deaths: 20, kd: 8.00, wins: 25, losses: 8, score: 720},
+    {rank: 6, name: "slawa_blak2", kills: 150, deaths: 30, kd: 5.00, wins: 22, losses: 10, score: 700},
+    {rank: 7, name: "Sianru", kills: 140, deaths: 25, kd: 5.60, wins: 20, losses: 12, score: 680},
+    {rank: 8, name: "Danya_Sharingan", kills: 130, deaths: 20, kd: 6.50, wins: 18, losses: 8, score: 650},
+    {rank: 9, name: "PvP_S0ska", kills: 120, deaths: 15, kd: 8.00, wins: 16, losses: 5, score: 620},
+    {rank: 10, name: "MaceANDSpear", kills: 110, deaths: 25, kd: 4.40, wins: 15, losses: 10, score: 600},
+];
+
+// Контейнер таблицы
+const container = document.getElementById('table-container');
+
+// Создаем таблицу динамически
+let tableHTML = `<table class="leaderboard-table">
+<thead>
+<tr>
+<th>Rank</th>
+<th>Player</th>
+<th>Kills</th>
+<th>Deaths</th>
+<th>K/D</th>
+</tr>
+</thead>
+<tbody>`;
+
+topPlayers.forEach(player => {
+    tableHTML += `
+    <tr data-rank="${player.rank}" data-name="${player.name}" data-kills="${player.kills}" data-deaths="${player.deaths}" data-kd="${player.kd}" data-wins="${player.wins}" data-losses="${player.losses}" data-score="${player.score}">
+        <td>${player.rank}</td>
+        <td>${player.name}</td>
+        <td>${player.kills}</td>
+        <td>${player.deaths}</td>
+        <td>${player.kd}</td>
+    </tr>`;
+});
+
+tableHTML += `</tbody></table>`;
+container.innerHTML = tableHTML;
+
+// Получаем элементы popup
+const popup = document.getElementById('player-popup');
+const popupClose = document.getElementById('popup-close');
+const popupPlayername = document.getElementById('popup-playername');
+const popupStats = document.getElementById('popup-stats');
+
+// Добавляем клик на строки таблицы
+document.querySelectorAll('.leaderboard-table tbody tr').forEach(row => {
+    row.addEventListener('click', () => {
+        popupPlayername.textContent = row.dataset.name;
+        popupStats.innerHTML = `
+            <li>Kills: ${row.dataset.kills}</li>
+            <li>Deaths: ${row.dataset.deaths}</li>
+            <li>K/D: ${row.dataset.kd}</li>
+            <li>Wins: ${row.dataset.wins}</li>
+            <li>Losses: ${row.dataset.losses}</li>
+            <li>Score: ${row.dataset.score}</li>
+        `;
+        popup.classList.remove('popup-hidden');
+        popup.classList.add('popup-show');
+    });
+});
+
+// Закрытие popup по крестику
+popupClose.addEventListener('click', () => {
+    popup.classList.remove('popup-show');
+    popup.classList.add('popup-hidden');
+});
+
+// Закрытие popup по клику вне контента
+popup.addEventListener('click', e => {
+    if(e.target === popup) {
+        popup.classList.remove('popup-show');
+        popup.classList.add('popup-hidden');
+    }
+});
+</script>
+</body>
+</html>
+<!-- Popup окно статистики -->
+<div id="player-popup" class="popup-hidden">
+    <div class="popup-content">
+        <span id="popup-close">&times;</span>
+        <h3 id="popup-playername">PlayerName</h3>
+        <ul id="popup-stats">
+            <li>Kills: 0</li>
+            <li>Deaths: 0</li>
+            <li>K/D: 0</li>
+            <li>Wins: 0</li>
+            <li>Losses: 0</li>
+            <li>Score: 0</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Стили для popup -->
+<style>
+.popup-hidden {
+    display: none;
+}
+
+.popup-show {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    animation: fadeInPopup 0.3s ease forwards;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #0d0d0d;
+    padding: 20px 30px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    color: #f5f5f5;
+    min-width: 250px;
+    max-width: 400px;
+    animation: scaleUp 0.3s ease forwards;
+    position: relative;
+}
+
+.popup-content h3 {
+    color: #f0c530;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.popup-content ul {
+    list-style: none;
+}
+
+.popup-content li {
+    padding: 5px 0;
+}
+
+#popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #f0c530;
+}
+
+@keyframes fadeInPopup {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes scaleUp {
+    from {transform: scale(0.8);}
+    to {transform: scale(1);}
+}
+</style>
